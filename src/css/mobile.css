@@ -26,3 +26,12 @@ html {
 footer {
     text-align: center;
 }
+
+.mobileHeader i{
+    font-size: 0.5rem;
+    float: right;
+    margin-right: 0.3rem;
+    margin-top: 0.3rem;
+    color:#2db7f5;
+}
+  

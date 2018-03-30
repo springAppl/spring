@@ -53,16 +53,30 @@ class PCHeader extends React.Component {
         }
     }
 
+    inserUserInfo(json) {
+        this.setState({
+            userNickName: json.userNickName,
+            userid: json.userid
+        });
+    }
+
+
     handleSubmit(e) {
-        // 
+        // 阻止冒泡事件
         e.preventDefault();
         var myFetchOptions = {
             method: 'GET'
         };
         var formData = this.props.form.getFieldsValue();
-        console.log(formData);
-        fetch('')
-
+        fetch('/data/login.json')
+        .then(function(response) {
+            return response.json()
+        }).then((json) => this.inserUserInfo(json))
+        .catch(function(ex) {
+            console.log('parsing failed', ex)
+        });
+        message.success('请求成功');
+        this.setModalVisible(false);
     }
 
     render(){
