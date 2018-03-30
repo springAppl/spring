@@ -55,6 +55,14 @@ class PCHeader extends React.Component {
 
     handleSubmit(e) {
         // 
+        e.preventDefault();
+        var myFetchOptions = {
+            method: 'GET'
+        };
+        var formData = this.props.form.getFieldsValue();
+        console.log(formData);
+        fetch('')
+
     }
 
     render(){
@@ -118,7 +126,7 @@ class PCHeader extends React.Component {
                             onOk={() => this.setModalVisible(false)} okText="关闭" >
                                 <Tabs type="card">
                                     <TabPane tab="注册" key="2">
-                                        <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+                                        <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
                                             <FormItem label="账户">
                                                 <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
                                             </FormItem>
