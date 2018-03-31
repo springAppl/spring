@@ -110,10 +110,10 @@ class MobileHeader extends React.Component {
                                                 <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
                                             </FormItem>
                                             <FormItem lable="密码">
-                                                <Input type="pass" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
+                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
                                             </FormItem>
                                             <FormItem label="确认密码">
-                                                <Input placeholder="请再次输入你的密码" {...getFieldProps('r_confirmPassword')} />
+                                                <Input type="password" placeholder="请再次输入你的密码" {...getFieldProps('r_confirmPassword')} />
                                             </FormItem>
                                             <Button type="primary" htmlType="submit">注册</Button>
                                         </Form>
