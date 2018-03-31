@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { 
     Row, 
     Col, 
@@ -53,8 +54,10 @@ class PCHeader extends React.Component {
         }
     }
 
-    inserUserInfo(json) {
-        
+    setLogined(hasLogined){
+        this.setState({
+            hasLogined: true
+        });
     }
 
 
@@ -67,21 +70,25 @@ class PCHeader extends React.Component {
         var formData = this.props.form.getFieldsValue();
         const url = '/data/login.json?userName=' + formData.r_username + '&password=' + formData.r_password + '&confirmPassword=' + formData.r_confirmPassword;
         console.log(url);
+
+        this._isMounted = true
         fetch(url)
         .then(response => response.json())
         .then(json => {
             this.setState({
                 userNickName: json.userNickName,
-                userid: json.userid,
-                hasLogined: true
+                userid: json.userid
             });
+                
         })
         .catch(function(ex) {
             console.log('parsing failed', ex)
         });
+        if (this.state.action=="login") {
+			this.setState({hasLogined:true});
+		}
         message.success('请求成功');
         this.setModalVisible(false);
-        console.log(this.state.hasLogined);
     }
 
 
@@ -104,7 +111,7 @@ class PCHeader extends React.Component {
         <Menu.Item key="logout" className="">
             <Button type="primary" htmlType="button" >{this.state.userNickName}</Button>
             &nbsp;&nbsp;
-            <Link target="_blank">
+            <Link href="_blank">
                 <Button type="dashed" htmlType="button">个人中心</Button>
             </Link>
             &nbsp;&nbsp;
