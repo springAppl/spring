@@ -16,3 +16,10 @@
 footer {
     text-align: center;
 }
+
+.register * {
+    float: right !important;
+    margin-right: 8px;
+    margin-top: 6px;
+    margin-bottom: 9px;
+}

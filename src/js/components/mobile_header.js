@@ -69,28 +69,47 @@ class MobileHeader extends React.Component {
             method: 'GET'
         };
         var formData = this.props.form.getFieldsValue();
-        fetch('/data/login.json')
-        .then(function(response) {
-            return response.json()
-        }).then((json) => this.inserUserInfo(json))
+        fetch('/data/login.json?userName=' + formData.r_username + '&password=' + formData.r_password + '&confirmPassword=' + formData.r_confirmPassword)
+        .then(response => response.json())
+        .then(json => {
+            this.setState({
+                userNickName: json.userNickName,
+                userid: json.userid
+            });      
+        })
         .catch(function(ex) {
             console.log('parsing failed', ex)
         });
+        if (this.state.action=="login") {
+			this.setState({hasLogined:true});
+		}
         message.success('请求成功');
         this.setModalVisible(false);
     }
 
     login() {
 		this.setModalVisible(true);
-	};
+    };
+    
+
+    callback(key){
+        if(key === "1") {
+            this.setState({
+                action: 'register'
+            });
+        } else if(key === "2") {
+            this.setState({
+                action: 'login'
+            });
+        }
+    }
 
     render(){
 
         let {getFieldProps} = this.props.form;
         const userShow = this.state.hasLogined
-        ? <Link to={`/usercenter`}>
-                <Icon type="inbox"/>
-            </Link>
+        ? 
+        <a href="/usercenter"><Icon type="inbox"/></a>
         : <Icon type="setting" onClick={this.login.bind(this)}/>
 
         return (
@@ -103,7 +122,18 @@ class MobileHeader extends React.Component {
                 <Modal title="用户中心" wrapClassName="vertical-center-modal" visible={this.state.modaVisible}
                             onCancel={() => this.setModalVisible(false)}
                             onOk={() => this.setModalVisible(false)} okText="关闭" >
-                                <Tabs type="card">
+                                <Tabs type="card" defaultActiveKey="1" onChange={this.callback.bind(this)}>
+                                    <TabPane tab="登录" key="1">
+                                        <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
+                                            <FormItem label="账户">
+                                                <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
+                                            </FormItem>
+                                            <FormItem lable="密码">
+                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
+                                            </FormItem>
+                                            <Button type="primary" htmlType="submit">登录</Button>
+                                        </Form>
+                                    </TabPane>
                                     <TabPane tab="注册" key="2">
                                         <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
                                             <FormItem label="账户">
@@ -119,7 +149,7 @@ class MobileHeader extends React.Component {
                                         </Form>
                                     </TabPane>
                                 </Tabs>
-                            </Modal>
+                </Modal>
             </div>
         );
     }

@@ -68,18 +68,13 @@ class PCHeader extends React.Component {
             method: 'GET'
         };
         var formData = this.props.form.getFieldsValue();
-        const url = '/data/login.json?userName=' + formData.r_username + '&password=' + formData.r_password + '&confirmPassword=' + formData.r_confirmPassword;
-        console.log(url);
-
-        this._isMounted = true
-        fetch(url)
+        fetch('/data/login.json?userName=' + formData.r_username + '&password=' + formData.r_password + '&confirmPassword=' + formData.r_confirmPassword)
         .then(response => response.json())
         .then(json => {
             this.setState({
                 userNickName: json.userNickName,
                 userid: json.userid
-            });
-                
+            });      
         })
         .catch(function(ex) {
             console.log('parsing failed', ex)
@@ -106,33 +101,29 @@ class PCHeader extends React.Component {
 
     render(){
         let {getFieldProps} = this.props.form;
-        const userShow = this.state.hasLogined 
-        ? 
-        <Menu.Item key="logout" className="">
+        const userShow = this.state.hasLogined
+        ?
+        <Menu.Item key="logout" className="register">
             <Button type="primary" htmlType="button" >{this.state.userNickName}</Button>
-            &nbsp;&nbsp;
-            <Link href="_blank">
-                <Button type="dashed" htmlType="button">个人中心</Button>
-            </Link>
-            &nbsp;&nbsp;
+            <Button type="dashed" htmlType="button">个人中心</Button>
             <Button type="ghost" htmlType="button">退出</Button>
         </Menu.Item>
         :
-        <Menu.Item key="register" class="register">
+        <Menu.Item key="register" class="register" >
             <Icon type="appstore" />注册/登录
         </Menu.Item>;
         return (
             <div className="pcHeader">
                 <header>
                     <Row>
-                        <Col span={2}/>
+                        <Col span={1}/>
                         <Col span={4}>
                             <a  href="/" className="logo">
                                 <img src={logo} alt="logo" />
                                 <span>ReactNews</span>
                             </a>
                         </Col>
-                        <Col span={16}>
+                        <Col span={18}>
                             <Menu mode="horizontal"  selectedKeys={[this.state.current]} onClick={this.handleClick.bind(this)}>
                                 <Menu.Item key="top">
                                     <Icon type="appstore" /> 头条
@@ -164,7 +155,18 @@ class PCHeader extends React.Component {
                             onCancel={() => this.setModalVisible(false)}
                             onOk={() => this.setModalVisible(false)} okText="关闭" >
                                 <Tabs type="card" defaultActiveKey="1" onChange={this.callback.bind(this)}>
-                                    <TabPane tab="注册" key="1">
+                                    <TabPane tab="登录" key="1">
+                                        <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
+                                            <FormItem label="账户">
+                                                <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
+                                            </FormItem>
+                                            <FormItem lable="密码">
+                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
+                                            </FormItem>
+                                            <Button type="primary" htmlType="submit">登录</Button>
+                                        </Form>
+                                    </TabPane>
+                                    <TabPane tab="注册" key="2">
                                         <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
                                             <FormItem label="账户">
                                                 <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
@@ -178,21 +180,10 @@ class PCHeader extends React.Component {
                                             <Button type="primary" htmlType="submit">注册</Button>
                                         </Form>
                                     </TabPane>
-                                    <TabPane tab="登录" key="2">
-                                        <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
-                                            <FormItem label="账户">
-                                                <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
-                                            </FormItem>
-                                            <FormItem lable="密码">
-                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
-                                            </FormItem>
-                                            <Button type="primary" htmlType="submit">登录</Button>
-                                        </Form>
-                                    </TabPane>
                                 </Tabs>
                             </Modal>
                         </Col>
-                        <Col span={2}></Col>
+                        <Col span={1}></Col>
                     </Row>
                 </header>    
             </div>
