@@ -1,56 +1,35 @@
-.logo {
-    align-items: center;
-    display: flex;
-}
-
-.logo img {
-    width: 48px;
-    height: 48px;
-}
-
-.logo span {
-    font-size: 24px;
-    padding-left: 5px;
-}
-
-footer {
-    text-align: center;
-}
-
-.register * {
-    float: right !important;
-    margin-right: 8px;
-    margin-top: 6px;
-    margin-bottom: 9px;
-}
-
-.ant-carousel .slick-slide {
-    text-align: center;
-    height: 400px;
-    line-height: 160px;
-    background: #364d79;
-    overflow: hidden;
-  }
-  
-  .ant-carousel .slick-slide h3 {
-    color: #fff;
-  }
-
-.carouselWrapper {
-    width: 300px;
-    height: 400px;
-}
-
-.newsblock {
-    width: 300px;
-    height: 400px;
+.htmlWrapper {
+    width: 1200px;
+    margin: auto;
 }
 
 .content {
     margin-top: 10px;
 }
 
-.content>* {
+.BlockLeft {
+    width: 800px;
+}
+
+.BlockLeft .carouselWrapper {
+    width: 400px;
+}
+
+.BlockLeft .newsCard {
+    width: 400px;
+}
+
+.BlockLeft>* {
     float: left;
-    margin-left: 10px;
+}
+
+.BlockRight {
+    width: 400px;
+}
+
+
+
+.ImageBlock {
+    float: left;
+    margin-left: 13px;  
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { 
     Row, 
     Col, 
@@ -12,10 +11,13 @@ import {
     Button, 
     Checkbox, 
     Anchor,
-    Modal 
+    Modal,
+    Dropdown
 } from 'antd';
 import 'antd/dist/antd.css';
 import logo from '../../images/logo.png';
+import '../../css/pc_header.css';
+
 const FormItem = Form.Item;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -121,14 +123,31 @@ class PCHeader extends React.Component {
 		}
 	}
 
+
+
+
     render(){
         let {getFieldProps} = this.props.form;
+
+        const menu = (
+            <Menu>
+              <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">个人中心</a>
+              </Menu.Item>
+              <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">退出</a>
+              </Menu.Item>
+            </Menu>
+          );
+
         const userShow = this.state.hasLogined
         ?
-        <Menu.Item key="logout" className="register">
-            <Button type="primary" htmlType="button" >{ this.state.userNickName }</Button>
-            <Button type="dashed" htmlType="button">个人中心</Button>
-            <Button type="ghost" htmlType="button" onClick={this.logout.bind(this)} >退出</Button>
+        <Menu.Item>
+            <Dropdown overlay={menu}>
+                <a className="ant-dropdown-link" href="#">
+                    {this.state.userNickName} <Icon type="down" />
+                </a>
+            </Dropdown>
         </Menu.Item>
         :
         <Menu.Item key="register" >
@@ -138,7 +157,7 @@ class PCHeader extends React.Component {
             <div className="pcHeader">
                 <header>
                     <Row>
-                        <Col span={1}/>
+                        <Col span={1}></Col>
                         <Col span={4}>
                             <a  href="/" className="logo">
                                 <img src={logo} alt="logo" />

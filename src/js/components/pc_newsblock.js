@@ -1,6 +1,6 @@
 import React from 'react';
-import { Tabs } from 'antd';
-const TabPane = Tabs.TabPane;
+import '../../css/pc_newsblock.css';
+
 
 export default class NewsBlock extends React.Component {
     constructor(props) {
@@ -10,10 +10,7 @@ export default class NewsBlock extends React.Component {
         }
     }
     componentWillMount() {
-        this.news();
-    }
-    news(){
-        fetch('/data/news.json')
+        fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=' + this.props.newsType  + '&count='+this.props.newsNum)
         .then(response => response.json())
         .then(json => {
             this.setState({
@@ -23,14 +20,9 @@ export default class NewsBlock extends React.Component {
     }
     render() {
         return (
-            <Tabs>
-                <TabPane tab="头条" key="1">
-                    {
-                        this.state.data.map(ele => <h4>{ele}</h4>)
-                    }
-                </TabPane>
-                <TabPane tab="娱乐" key="2">Content of Tab Pane 2</TabPane>
-            </Tabs>
+            <div className="NewsBlock">
+                {   this.state.data.map((ele, index) => <h4 key={index}>{ele.title}</h4>)   }
+            </div>
         );
     }
 }

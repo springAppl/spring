@@ -1,0 +1,6 @@
+.NewsBlock h4{
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
