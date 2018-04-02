@@ -1,4 +1,7 @@
 import React from 'react';
+import PCNewsImageBlock from './pc_news_image_block';
+import { Row, Col} from 'antd';
+import '../../css/pc_detail.css';
 export default class Detail extends React.Component {
     constructor(props){
         super(props);
@@ -23,10 +26,20 @@ export default class Detail extends React.Component {
 	}
     render() {
         return(
-            <article>
-                <header><h2>{this.state.title}</h2></header>
-                <div dangerouslySetInnerHTML={this.createMarkup()}></div>
-            </article>
+            <div>
+
+                <Row>
+                    <Col className="article"   span={16}>
+                        <article>
+                            <div dangerouslySetInnerHTML={this.createMarkup()}></div>
+                        </article> 
+                    </Col>
+                    <Col span={8} className="BlockRight">
+                        <PCNewsImageBlock newsType="yule" imageWidth={95} cartTitle="热点"/>
+                    </Col>
+                </Row>
+                               
+            </div>
         );
     }
 }
