@@ -1,5 +1,10 @@
 import React from 'react';
 import '../../css/pc_newsblock.css';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+  } from 'react-router-dom';
 
 
 export default class NewsBlock extends React.Component {
@@ -21,7 +26,7 @@ export default class NewsBlock extends React.Component {
     render() {
         return (
             <div className="NewsBlock">
-                {   this.state.data.map((ele, index) => <h4 key={index}>{ele.title}</h4>)   }
+                {   this.state.data.map((ele, index) => <Link key={ele.uniquekey} to={"/detail/" + ele.uniquekey}><h4 key={index}>{ele.title}</h4></Link>)   }
             </div>
         );
     }

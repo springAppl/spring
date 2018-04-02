@@ -11,23 +11,17 @@
     width: 800px;
 }
 
-.BlockLeft .carouselWrapper {
-    width: 400px;
-}
-
-.BlockLeft .newsCard {
-    width: 400px;
-}
-
 .BlockLeft>* {
+    margin-left: 20px;
+    width: 380px;
     float: left;
+    height: 350px;
 }
 
 .BlockRight {
-    width: 400px;
+    width: 380px;
+    margin-left: 20px;
 }
-
-
 
 .ImageBlock {
     float: left;

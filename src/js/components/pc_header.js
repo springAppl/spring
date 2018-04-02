@@ -164,7 +164,7 @@ class PCHeader extends React.Component {
                                 <span>ReactNews</span>
                             </a>
                         </Col>
-                        <Col span={18}>
+                        <Col span={19}>
                             <Menu mode="horizontal"  selectedKeys={[this.state.current]} onClick={this.handleClick.bind(this)}>
                                 <Menu.Item key="top">
                                     <Icon type="appstore" /> 头条
@@ -224,7 +224,6 @@ class PCHeader extends React.Component {
                                 </Tabs>
                             </Modal>
                         </Col>
-                        <Col span={1}></Col>
                     </Row>
                 </header>    
             </div>
