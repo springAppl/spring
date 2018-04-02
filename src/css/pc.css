@@ -23,3 +23,34 @@ footer {
     margin-top: 6px;
     margin-bottom: 9px;
 }
+
+.ant-carousel .slick-slide {
+    text-align: center;
+    height: 400px;
+    line-height: 160px;
+    background: #364d79;
+    overflow: hidden;
+  }
+  
+  .ant-carousel .slick-slide h3 {
+    color: #fff;
+  }
+
+.carouselWrapper {
+    width: 300px;
+    height: 400px;
+}
+
+.newsblock {
+    width: 300px;
+    height: 400px;
+}
+
+.content {
+    margin-top: 10px;
+}
+
+.content>* {
+    float: left;
+    margin-left: 10px;
+}

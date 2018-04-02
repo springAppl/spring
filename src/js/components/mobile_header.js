@@ -110,7 +110,8 @@ class MobileHeader extends React.Component {
         const userShow = this.state.hasLogined
         ? 
         <a href="/usercenter"><Icon type="inbox"/></a>
-        : <Icon type="setting" onClick={this.login.bind(this)}/>
+        : 
+        <Icon type="setting" onClick={this.login.bind(this)}/>
 
         return (
             <div className="mobileHeader">

@@ -74,14 +74,17 @@ class PCHeader extends React.Component {
             this.setState({
                 userNickName: json.userNickName,
                 userid: json.userid
-            });      
+            });
+            localStorage.userid= json.userid;
+			localStorage.userNickName = json.userNickName;      
         })
         .catch(function(ex) {
             console.log('parsing failed', ex)
         });
         if (this.state.action=="login") {
-			this.setState({hasLogined:true});
-		}
+            this.setState({hasLogined:true});
+        }
+        
         message.success('请求成功');
         this.setModalVisible(false);
     }
@@ -99,17 +102,36 @@ class PCHeader extends React.Component {
         }
     }
 
+
+    logout() {
+        localStorage.userid= '';
+		localStorage.userNickName = '';
+		this.setState({hasLogined:false}); 
+    }
+
+    componentWillMount(){
+		if (localStorage.userid != '') {
+			this.setState({hasLogined:true});
+			this.setState(
+                {
+                    userNickName: localStorage.userNickName,
+                    userid: localStorage.userid
+                }
+            );
+		}
+	}
+
     render(){
         let {getFieldProps} = this.props.form;
         const userShow = this.state.hasLogined
         ?
         <Menu.Item key="logout" className="register">
-            <Button type="primary" htmlType="button" >{this.state.userNickName}</Button>
+            <Button type="primary" htmlType="button" >{ this.state.userNickName }</Button>
             <Button type="dashed" htmlType="button">个人中心</Button>
-            <Button type="ghost" htmlType="button">退出</Button>
+            <Button type="ghost" htmlType="button" onClick={this.logout.bind(this)} >退出</Button>
         </Menu.Item>
         :
-        <Menu.Item key="register" class="register" >
+        <Menu.Item key="register" >
             <Icon type="appstore" />注册/登录
         </Menu.Item>;
         return (
