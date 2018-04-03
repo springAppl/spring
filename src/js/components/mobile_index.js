@@ -1,8 +1,8 @@
 import React from 'react';
 import MobileHeader from './mobile_header';
 import MobileFooter from './mobile_footer';
-import '../../css/mobile.css';
 import { Tabs, Carousel } from 'antd';
+import MobileList from './mobile_list';
 const TabPane = Tabs.TabPane;
 
 export default class MobileIndex extends React.Component {
@@ -22,27 +22,12 @@ export default class MobileIndex extends React.Component {
                 carousels: json
             }
         ));
-        this.changeTab(this.state.activeKey);
-    }
-
-    changeTab(activeKey){
-        fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=' + activeKey  + '&count=10')
-        .then(response => response.json())
-        .then(json => {
-            this.setState({
-                data: json
-            });
-            console.log(json);
-        })
-        // todo 获取activeKey对应到tab,进行填充内容
-
     }
 
     render() {
         return (
             <div>
-                <MobileHeader></MobileHeader>
-                <Tabs onChange={this.changeTab.bind(this)}>
+                <Tabs >
                     <TabPane tab="头条" key="top">
                         <div className="carouselWrapper">
                             <Carousel autoplay>
@@ -53,23 +38,24 @@ export default class MobileIndex extends React.Component {
                                 }
                             </Carousel>
                         </div>
+						<MobileList count={20} type="top"/>
                     </TabPane>
                     <TabPane tab="社会" key="shehui">
-                    </TabPane>
-                    <TabPane tab="国内" key="guonei">
+                        <MobileList count={20} type="shehui"/>
                     </TabPane>
                     <TabPane tab="国际" key="guoji">
+                        <MobileList count={20} type="guoji"/>
                     </TabPane>
                     <TabPane tab="娱乐" key="yule">
+                        <MobileList count={20} type="yule"/>
                     </TabPane>
                     <TabPane tab="体育" key="tiyu">
+                        <MobileList count={20} type="tiyu"/>
                     </TabPane>
                     <TabPane tab="科技" key="keji">
-                    </TabPane>
-                    <TabPane tab="时尚" key="shishang">
+                        <MobileList count={20} type="keji"/>
                     </TabPane>
                 </Tabs>
-                <MobileFooter></MobileFooter>
             </div>
         );
     }

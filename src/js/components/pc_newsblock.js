@@ -4,7 +4,7 @@ import {
     BrowserRouter as Router,
     Route,
     Link
-  } from 'react-router-dom';
+} from 'react-router-dom';
 
 
 export default class NewsBlock extends React.Component {

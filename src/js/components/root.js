@@ -12,6 +12,10 @@ import {
   } from 'react-router-dom';
 import Detail from './pc_detail';
 import '../../css/pc.css';
+import MobileDetail from './mobile_detail';
+import MobileHeader from './mobile_header';
+import MobileFooter from './mobile_footer';
+import '../../css/mobile.css';
 
 export default class Root extends React.Component {
     render() {
@@ -28,7 +32,14 @@ export default class Root extends React.Component {
                     </Router>
                 </MediaQuery>
                 <MediaQuery query="(max-device-width: 1224px)">
-                    <MobileIndex/>
+                    <Router>
+                        <div >
+                            <MobileHeader></MobileHeader>
+                                <Route exact path="/" component={MobileIndex} />
+                                <Route path="/detail/:uniquekey" component={MobileDetail}/>
+                            <MobileFooter></MobileFooter>
+                        </div>
+                    </Router>
                 </MediaQuery>
             </div>
         );
