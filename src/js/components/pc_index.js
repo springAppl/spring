@@ -13,10 +13,6 @@ export default class PCIndex extends React.Component {
     }
 
     componentWillMount(){
-        this.carousels();
-    }
-
-    carousels(){
         fetch('/data/carousels.json')
         .then(response => response.json())
         .then(json => this.setState(
@@ -25,6 +21,7 @@ export default class PCIndex extends React.Component {
             }
         ));
     }
+
     render() {
 
         return (
