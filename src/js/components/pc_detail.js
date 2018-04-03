@@ -27,7 +27,6 @@ export default class Detail extends React.Component {
     render() {
         return(
             <div>
-
                 <Row>
                     <Col className="article"   span={16}>
                         <article>
@@ -37,8 +36,7 @@ export default class Detail extends React.Component {
                     <Col span={8} className="BlockRight">
                         <PCNewsImageBlock newsType="yule" imageWidth={95} cartTitle="热点"/>
                     </Col>
-                </Row>
-                               
+                </Row>              
             </div>
         );
     }

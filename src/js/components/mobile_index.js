@@ -20,6 +20,7 @@ export default class MobileIndex extends React.Component {
                     <TabPane tab="科技" key="7"></TabPane>
                     <TabPane tab="时尚" key="8"></TabPane>
                 </Tabs>
+                
                 <MobileFooter></MobileFooter>
             </div>
         );
