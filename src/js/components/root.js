@@ -16,6 +16,7 @@ import MobileDetail from './mobile_detail';
 import MobileHeader from './mobile_header';
 import MobileFooter from './mobile_footer';
 import '../../css/mobile.css';
+import POST from './post';
 
 export default class Root extends React.Component {
     render() {
@@ -26,7 +27,8 @@ export default class Root extends React.Component {
                         <div className="htmlWrapper">
                             <PCHeader></PCHeader>
                                 <Route exact path="/" component={PCIndex}></Route>
-                                <Route path="/detail/:uniquekey" component={Detail}></Route>  
+                                <Route path="/detail/:uniquekey" component={Detail}></Route>
+                                <Route path="/post" component={POST}></Route>  
                             <PCFooter></PCFooter>
                         </div>
                     </Router>

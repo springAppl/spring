@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "antd": "^3.4.0",
-    "fetch": "^1.1.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "hmacsha1": "^1.0.0",
+    "js-base64": "^2.4.3",
+    "md5": "^2.2.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-lz-editor": "^0.12.1",
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1"
