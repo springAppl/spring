@@ -6,14 +6,16 @@ import md5 from "md5";
 import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
 import LzEditor from 'react-lz-editor'
-import {Button} from 'antd';
+import {Button, Modal} from 'antd';
 export default class POST extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         htmlContent: '请输入内容',
         responseList: [],// 已上传文件列表
-        content: ''
+        content: '',
+        modalVisible: true,
+        title: ''
       }
       this.receiveHtml = this.receiveHtml.bind(this);
       this.onChange = this.onChange.bind(this);
@@ -95,7 +97,7 @@ export default class POST extends React.Component {
       fetch('/api/article', {
         method: 'POST',
         body: JSON.stringify({
-          title: '写死',
+          title: this.state.title,
           content: this.state.content
         }),
         headers: {
@@ -104,6 +106,15 @@ export default class POST extends React.Component {
       }).then(response => response.json())
       .then(json => console.log(json));
     }
+    handleOk() {
+      this.setState({
+        modalVisible: false
+      });
+    }
+    handleCancel() {
+
+    }
+
     render() {
       let policy = "";
   
@@ -118,10 +129,22 @@ export default class POST extends React.Component {
         beforeUpload: this.beforeUpload,
         showUploadList: true
       }
+      const modalProps = {
+        visible: this.state.modalVisible,
+        onOk: this.handleOk.bind(this),
+        footer: [
+          <Button key="submit" type="primary"  onClick={this.handleOk.bind(this)}>
+            确认
+          </Button>
+        ]
+      }
       return (
         <div>
           <LzEditor active={true} importContent={this.state.htmlContent} cbReceiver={this.receiveHtml} uploadProps={uploadProps}/>
           <Button onClick={this.submit.bind(this)}>提交</Button>
+          <Modal {...modalProps}>
+          <label>title</label> <input type="text" />
+        </Modal>
         </div>
       );
     }
