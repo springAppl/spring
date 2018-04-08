@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row, Col} from 'antd';
 export default class MobileDetail extends React.Component {
     constructor(props){
         super(props);
@@ -26,15 +25,7 @@ export default class MobileDetail extends React.Component {
 	}
     render() {
         return(
-            <div>
-                <Row>
-                    <Col span={1}></Col>
-                    <Col span={22}>
-                        <div dangerouslySetInnerHTML={this.createMarkup()}></div>
-                    </Col>
-                    <Col span={1}></Col>
-                </Row>
-            </div>
+            <div dangerouslySetInnerHTML={this.createMarkup()}></div>   
         );
     }
 }

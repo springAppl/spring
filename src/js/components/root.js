@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col} from 'antd';
 import 'antd/dist/antd.css';
 import MediaQuery from 'react-responsive';
 import PCIndex from './pc_index';
@@ -17,6 +18,8 @@ import MobileHeader from './mobile_header';
 import MobileFooter from './mobile_footer';
 import '../../css/mobile.css';
 import POST from './post';
+import UserCenter from './usercenter';
+import LoginForm from './login_form';
 
 export default class Root extends React.Component {
     render() {
@@ -24,11 +27,13 @@ export default class Root extends React.Component {
             <div>
                 <MediaQuery query="(min-device-width: 1224px)">
                     <Router>
-                        <div className="htmlWrapper">
+                        <div className="pcWrapper">
                             <PCHeader></PCHeader>
                                 <Route exact path="/" component={PCIndex}></Route>
                                 <Route path="/detail/:uniquekey" component={Detail}></Route>
                                 <Route path="/post" component={POST}></Route>  
+                                <Route path="/usercenter" component={UserCenter}></Route>  
+                                <Route path="/login" component={LoginForm}></Route>
                             <PCFooter></PCFooter>
                         </div>
                     </Router>
@@ -37,7 +42,13 @@ export default class Root extends React.Component {
                     <Router>
                         <div >
                             <MobileHeader></MobileHeader>
-                                <Route exact path="/" component={MobileIndex} />
+                                <Row>
+                                    <Col span={1}></Col>
+                                    <Col span={22}>
+                                        <Route exact path="/" component={MobileIndex} />
+                                    </Col>
+                                    <Col span={1}></Col>
+                                </Row> 
                                 <Route path="/detail/:uniquekey" component={MobileDetail}/>
                             <MobileFooter></MobileFooter>
                         </div>

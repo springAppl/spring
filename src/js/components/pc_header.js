@@ -10,19 +10,25 @@ import {
     Input, 
     Button, 
     Checkbox, 
-    Anchor,
     Modal,
     Dropdown
 } from 'antd';
 import 'antd/dist/antd.css';
 import logo from '../../images/logo.png';
 import '../../css/pc_header.css';
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    browserHistory,
+    withRouter
+  } from 'react-router-dom';
 
 const FormItem = Form.Item;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
-const Link = Anchor;
 const TabPane = Tabs.TabPane;
+
 
 class PCHeader extends React.Component {
     constructor(props) {
@@ -44,7 +50,7 @@ class PCHeader extends React.Component {
     }
 
     handleClick(e) {
-        if (e.key="register") {
+        if (e.key == "register") {
             this.setState({
                 current: 'register'
             });
@@ -121,7 +127,8 @@ class PCHeader extends React.Component {
                 }
             );
 		}
-	}
+    }
+    
 
 
 
@@ -130,11 +137,13 @@ class PCHeader extends React.Component {
         let {getFieldProps} = this.props.form;
 
         const menu = (
-            <Menu>
+            <Menu >
               <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">个人中心</a>
+                    <Link target="_blank" to={'/usercenter'}>
+                        个人中心
+					</Link>
               </Menu.Item>
-              <Menu.Item>
+              <Menu.Item key="logout">
                 <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">退出</a>
               </Menu.Item>
             </Menu>

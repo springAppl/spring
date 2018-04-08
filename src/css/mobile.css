@@ -2,6 +2,10 @@ html {
     font-size: 50px;
 }
 
+.mobileWrapper {
+
+}
+
 .mobileHeader {
     flex: 1;
     background: #f6f6f6;
