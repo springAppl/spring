@@ -7,6 +7,8 @@ import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
 import LzEditor from 'react-lz-editor'
 import {Button, Modal} from 'antd';
+import PostForm from './post_form';
+
 export default class POST extends React.Component {
     constructor(props) {
       super(props);
@@ -82,6 +84,11 @@ export default class POST extends React.Component {
       let Signature = Base64.encode(h);
       return Signature;
     }
+    hideModal(){
+      this.setState({
+        modalVisible: false
+      });
+    }
     getPolicy(fileName) {
       let now = new Date();
       let afterHour = new Date(now.getTime() + 1 * 60 * 60 * 1000); //expiration date time
@@ -132,19 +139,16 @@ export default class POST extends React.Component {
       const modalProps = {
         visible: this.state.modalVisible,
         onOk: this.handleOk.bind(this),
-        footer: [
-          <Button key="submit" type="primary"  onClick={this.handleOk.bind(this)}>
-            确认
-          </Button>
-        ]
+        footer: null,
+        closable: false
       }
       return (
         <div>
           <LzEditor active={true} importContent={this.state.htmlContent} cbReceiver={this.receiveHtml} uploadProps={uploadProps}/>
           <Button onClick={this.submit.bind(this)}>提交</Button>
           <Modal {...modalProps}>
-          <label>title</label> <input type="text" />
-        </Modal>
+            <PostForm handleClick={this.hideModal.bind(this)}/>
+          </Modal>
         </div>
       );
     }

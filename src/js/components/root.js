@@ -19,7 +19,6 @@ import MobileFooter from './mobile_footer';
 import '../../css/mobile.css';
 import POST from './post';
 import UserCenter from './usercenter';
-import LoginForm from './login_form';
 
 export default class Root extends React.Component {
     render() {
@@ -33,7 +32,6 @@ export default class Root extends React.Component {
                                 <Route path="/detail/:uniquekey" component={Detail}></Route>
                                 <Route path="/post" component={POST}></Route>  
                                 <Route path="/usercenter" component={UserCenter}></Route>  
-                                <Route path="/login" component={LoginForm}></Route>
                             <PCFooter></PCFooter>
                         </div>
                     </Router>
