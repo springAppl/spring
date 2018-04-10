@@ -16,18 +16,29 @@ class PostForm extends React.Component {
     }
     handleSubmit(event) {
         event.preventDefault();
-        this.props.handleClick();
-        
+        // close modal
+        fetch('/api/article',{
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: this.props.form.getFieldValue('title'),
+                tags: this.state.tags
+            })
+        }).then(response => response.json())
+        .then(json => {
+            this.props.handleClick(json);
+        });
     }
     handleClose(event) {
         const tags = this.state.tags.filter(tag => tag !== event);
-        console.log(tags);
+        this.setState({
+            tags: tags
+        });
     }
     viewNewTag(){
-        this.setState({
-
-
-            
+        this.setState({            
             visable: true
         });
     }

@@ -17,7 +17,8 @@ export default class POST extends React.Component {
         responseList: [],// 已上传文件列表
         content: '',
         modalVisible: true,
-        title: ''
+        title: '',
+        articleID: null
       }
       this.receiveHtml = this.receiveHtml.bind(this);
       this.onChange = this.onChange.bind(this);
@@ -84,9 +85,10 @@ export default class POST extends React.Component {
       let Signature = Base64.encode(h);
       return Signature;
     }
-    hideModal(){
+    hideModal(articleID){
       this.setState({
-        modalVisible: false
+        modalVisible: false,
+        articleID: articleID
       });
     }
     getPolicy(fileName) {
@@ -102,16 +104,15 @@ export default class POST extends React.Component {
     }
     submit(){
       fetch('/api/article', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({
-          title: this.state.title,
+          id: this.state.articleID,
           content: this.state.content
         }),
         headers: {
           'content-type': 'application/json'
         }
-      }).then(response => response.json())
-      .then(json => console.log(json));
+      });
     }
     handleOk() {
       this.setState({
