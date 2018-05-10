@@ -41,7 +41,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 #USER 1001
 
 # TODO: Set the default port for applications built using this image
-# EXPOSE 8080
+EXPOSE 80
 
 # TODO: Set the default CMD for the image
-# CMD ["/usr/libexec/s2i/usage"]
+CMD ["/usr/libexec/s2i/usage"]
