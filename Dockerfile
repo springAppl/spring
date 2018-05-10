@@ -22,7 +22,8 @@ RUN yum install -y wget;  \
     yum makecache;   \
     yum install -y epel-release.noarch; \
     yum install -y nodejs; \
-    yum update openssl -y; \
+    yum install nginx -y; \
+    yum install -y openssl ; \
     yum clean all;   \
     rm -rf /var/cache/yum;
 
@@ -37,7 +38,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 # RUN chown -R 1001:1001 /opt/app-root
 
 # This default user is created in the openshift/base-centos7 image
-USER 1001
+#USER 1001
 
 # TODO: Set the default port for applications built using this image
 # EXPOSE 8080

@@ -6,5 +6,7 @@
 # For more information see the documentation:
 #	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
 #
-
-exec asdf -p 8080
+echo "move nginx.conf to /etc/nginx/nginx.conf"
+mv nginx.conf /etc/nginx/nginx.conf
+echo "run nginx"
+nginx
