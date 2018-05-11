@@ -1,0 +1,24 @@
+apiVersion: apps.openshift.io/v1
+kind: "DeploymentConfig"
+metadata:
+  name: spring
+spec:
+  template:
+    metadata:
+      labels:
+        name: spring
+    spec:
+      containers:
+        - name: spring
+          image: 
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8778
+              protocol: TCP
+  selector:
+    name: spring
+  strategy:
+    type: "Rolling"
