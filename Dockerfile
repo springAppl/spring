@@ -16,9 +16,9 @@ FROM openshift/base-centos7
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
 RUN yum install -y wget;  \
-    wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo; \
-    yum clean all; \
-    rm -rf /var/cache/yum;  \
+#    wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo; \
+#    yum clean all; \
+#    rm -rf /var/cache/yum;  \
     yum makecache;   \
     yum install -y epel-release.noarch; \
     yum install -y nodejs; \
