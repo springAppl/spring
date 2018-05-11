@@ -1,5 +1,5 @@
 # springapp/spring
-FROM openshift/base-centos7
+FROM springapp/node-nginx:latest
 
 # TODO: Put the maintainer name in the image metadata
 # LABEL maintainer="Your Name <your@email.com>"
@@ -15,17 +15,6 @@ FROM openshift/base-centos7
 
 # TODO: Install required packages here:
 # RUN yum install -y ... && yum clean all -y
-RUN yum install -y wget;  \
-#    wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo; \
-#    yum clean all; \
-#    rm -rf /var/cache/yum;  \
-    yum makecache;   \
-    yum install -y epel-release.noarch; \
-    yum install -y nodejs; \
-    yum install nginx -y; \
-    yum install -y openssl ; \
-    yum clean all;   \
-    rm -rf /var/cache/yum;
 
 # TODO (optional): Copy the builder files into /opt/app-root
 # COPY ./<builder_folder>/ /opt/app-root/
@@ -41,7 +30,7 @@ COPY ./s2i/bin/ /usr/libexec/s2i
 USER 1001
 
 # TODO: Set the default port for applications built using this image
-EXPOSE 80
+EXPOSE 8080
 
 # TODO: Set the default CMD for the image
 CMD ["/usr/libexec/s2i/usage"]
