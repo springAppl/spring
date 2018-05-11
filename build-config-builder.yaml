@@ -1,0 +1,18 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: spring-builder
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'spring-builder:latest'
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/springAppl/spring.git'
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker

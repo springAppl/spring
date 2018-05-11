@@ -1,0 +1,28 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: spring
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'spring:latest'
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/springAppl/spring.git'
+    type: Git
+  strategy:
+    sourceStrategy:
+      forcePull: true
+      from:
+        kind: ImageStreamTag
+        name: 'spring-builder:latest'
+        namespace: kuboot
+    type: Source
+  triggers:
+    - imageChange:
+        lastTriggeredImageID: >-
+          docker-registry.default.svc:5000/kuboot/spring-builder@sha256:ff1665b0a9428254d26edc24f7a1a7c479c2381fecfb5ac4a0086bb2c58e6bfe
+      type: ImageChange
+    - type: ConfigChange
