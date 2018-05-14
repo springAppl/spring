@@ -23,6 +23,7 @@ echo "---> Installing application source..."
 cp -Rf /tmp/src/. ./
 
 echo "---> Building application from source..."
+echo "do nothing"
 # TODO: Add build steps for your application, eg npm install, bundle install, pip install, etc.
 #npm install --production
 #npm run build
