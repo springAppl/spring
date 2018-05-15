@@ -97,6 +97,26 @@ class PCHeader extends React.Component {
         this.setModalVisible(false);
     }
 
+    handleLogin(e){
+        e.preventDefault();
+        var formData = this.props.form.getFieldsValue();
+        fetch('/api/user/login?account=' + formData.account + '&password=' + formData.password)
+        .then(response => response.json)
+        .then(json => {
+            console.log("json:   " + json);
+            // 获取用户信息
+            this.setState({
+                userNickName: 'kuboot',
+                userid: 1,
+                hasLogined: true
+            });
+            localStorage.userid = this.state.userid;
+            localStorage.userNickName = this.state.userNickName;
+        })
+        message.success('登录成功');
+        this.setModalVisible(false);
+    }
+
 
     callback(key){
         if(key === "1") {
@@ -118,7 +138,7 @@ class PCHeader extends React.Component {
     }
 
     componentWillMount(){
-		if (localStorage.userid != '') {
+		if (localStorage.userid != undefined && localStorage.userid != ''  ) {
 			this.setState({hasLogined:true});
 			this.setState(
                 {
@@ -144,7 +164,7 @@ class PCHeader extends React.Component {
 					</Link>
               </Menu.Item>
               <Menu.Item key="logout">
-                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">退出</a>
+                <a target="_blank" rel="noopener noreferrer" href="/user/logout">退出</a>
               </Menu.Item>
             </Menu>
           );
@@ -201,20 +221,26 @@ class PCHeader extends React.Component {
                                 </Menu.Item>
                                 {userShow}
                             </Menu>
-                            <Modal title="用户中心" wrapClassName="vertical-center-modal" visible={this.state.modaVisible}
+                            <Modal 
+                            title="用户中心" 
+                            wrapClassName="vertical-center-modal" 
+                            visible={this.state.modaVisible}
                             onCancel={() => this.setModalVisible(false)}
-                            onOk={() => this.setModalVisible(false)} okText="关闭" >
+                            onOk={() => this.setModalVisible(false)} 
+                            okText="关闭" >
                                 <Tabs type="card" defaultActiveKey="1" onChange={this.callback.bind(this)}>
                                     <TabPane tab="登录" key="1">
-                                        <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
+                                        <Form horizontal="true" onSubmit={this.handleLogin.bind(this)}>
                                             <FormItem label="账户">
-                                                <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
+                                                <Input placeholder="请输入您的账号" {...getFieldProps('account')} />
                                             </FormItem>
                                             <FormItem lable="密码">
-                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
+                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('password')} />
                                             </FormItem>
                                             <Button type="primary" htmlType="submit">登录</Button>
                                         </Form>
+
+
                                     </TabPane>
                                     <TabPane tab="注册" key="2">
                                         <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
