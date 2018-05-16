@@ -69,52 +69,60 @@ class PCHeader extends React.Component {
     }
 
 
-    handleSubmit(e) {
-        // 阻止冒泡事件
+    handleRegister(e) {
+        // 阻止跳转
         e.preventDefault();
-        var myFetchOptions = {
-            method: 'GET'
-        };
         var formData = this.props.form.getFieldsValue();
-        fetch('/data/login.json?userName=' + formData.r_username + '&password=' + formData.r_password + '&confirmPassword=' + formData.r_confirmPassword)
-        .then(response => response.json())
-        .then(json => {
-            this.setState({
-                userNickName: json.userNickName,
-                userid: json.userid
-            });
-            localStorage.userid= json.userid;
-			localStorage.userNickName = json.userNickName;      
+        fetch('/api/user', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: formData.account,
+                password: formData.password,
+                mobile: formData.mobile
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
         })
-        .catch(function(ex) {
-            console.log('parsing failed', ex)
+        .then(response => {
+            if(response.status != 200) {
+                message.error("注册失败");
+                return;
+            }
+            var user = response.json();
+            this.setState({
+                userNickName: user.name,
+                userid: user.id,
+                hasLogined: true
+            });
+            localStorage.userid = user.id;
+            localStorage.userNickName = user.name;
+            this.setModalVisible(false);
         });
-        if (this.state.action=="login") {
-            this.setState({hasLogined:true});
-        }
-        
-        message.success('请求成功');
-        this.setModalVisible(false);
     }
 
     handleLogin(e){
         e.preventDefault();
         var formData = this.props.form.getFieldsValue();
         fetch('/api/user/login?account=' + formData.account + '&password=' + formData.password)
-        .then(response => response.json)
-        .then(json => {
-            console.log("json:   " + json);
-            // 获取用户信息
+        .then(response => {
+            if(response.status != 200) {
+                message.error("注册失败");
+                return;
+            }
+            return response.json();
+        })
+        .then(user => {
             this.setState({
-                userNickName: 'kuboot',
-                userid: 1,
+                userNickName: user.name,
+                userid: user.id,
                 hasLogined: true
             });
-            localStorage.userid = this.state.userid;
-            localStorage.userNickName = this.state.userNickName;
-        })
-        message.success('登录成功');
-        this.setModalVisible(false);
+            localStorage.userid = user.id;
+            localStorage.userNickName = user.name;
+            message.success('登录成功');
+            this.setModalVisible(false);
+        });
     }
 
 
@@ -131,7 +139,9 @@ class PCHeader extends React.Component {
     }
 
 
-    logout() {
+    logout(e) {
+        e.preventDefault();
+        fetch('/api/user/logout', {method: 'POST'});
         localStorage.userid= '';
 		localStorage.userNickName = '';
 		this.setState({hasLogined:false}); 
@@ -164,7 +174,7 @@ class PCHeader extends React.Component {
 					</Link>
               </Menu.Item>
               <Menu.Item key="logout">
-                <a target="_blank" rel="noopener noreferrer" href="/user/logout">退出</a>
+                 <a target="_blank" rel="noopener noreferrer" onClick={this.logout.bind(this)}>退出</a>
               </Menu.Item>
             </Menu>
           );
@@ -243,15 +253,18 @@ class PCHeader extends React.Component {
 
                                     </TabPane>
                                     <TabPane tab="注册" key="2">
-                                        <Form horizontal="true" onSubmit={this.handleSubmit.bind(this)}>
+                                        <Form horizontal="true" onSubmit={this.handleRegister.bind(this)}>
                                             <FormItem label="账户">
-                                                <Input placeholder="请输入您的账号" {...getFieldProps('r_userName')} />
+                                                <Input placeholder="请输入您的账号" {...getFieldProps('account')} />
+                                            </FormItem>
+                                            <FormItem label="手机号">
+                                                <Input placeholder="请输入您的手机号" {...getFieldProps('mobile')} />
                                             </FormItem>
                                             <FormItem lable="密码">
-                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('r_password')} />
+                                                <Input type="password" placeholder="请输入您的密码" {...getFieldProps('password')} />
                                             </FormItem>
                                             <FormItem label="确认密码">
-                                                <Input type="password" placeholder="请再次输入你的密码" {...getFieldProps('r_confirmPassword')} />
+                                                <Input type="password" placeholder="请再次输入你的密码" {...getFieldProps('confirmPassword')} />
                                             </FormItem>
                                             <Button type="primary" htmlType="submit">注册</Button>
                                         </Form>
