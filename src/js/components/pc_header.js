@@ -105,13 +105,7 @@ class PCHeader extends React.Component {
         e.preventDefault();
         var formData = this.props.form.getFieldsValue();
         fetch('/api/user/login?account=' + formData.account + '&password=' + formData.password)
-        .then(response => {
-            if(response.status != 200) {
-                message.error("注册失败");
-                return;
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(user => {
             this.setState({
                 userNickName: user.name,
