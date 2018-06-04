@@ -106,6 +106,12 @@ class PCHeader extends React.Component {
         var formData = this.props.form.getFieldsValue();
         fetch('/api/user/login?account=' + formData.account + '&password=' + formData.password)
         .then(response => response.json())
+        .then(result => {
+            if (result.message != undefined) {
+                throw new Error(result.message)
+            }
+            return result
+        })
         .then(user => {
             this.setState({
                 userNickName: user.name,
@@ -116,6 +122,8 @@ class PCHeader extends React.Component {
             localStorage.userNickName = user.name;
             message.success('登录成功');
             this.setModalVisible(false);
+        }).catch(error => {
+            message.error(error.message)
         });
     }
 
@@ -165,6 +173,9 @@ class PCHeader extends React.Component {
               <Menu.Item>
                     <Link target="_blank" to={'/usercenter'}>
                         个人中心
+					</Link>
+                    <Link target="_blank" to={'/post'}>
+                        发帖
 					</Link>
               </Menu.Item>
               <Menu.Item key="logout">
