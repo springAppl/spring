@@ -101,17 +101,31 @@ class PCHeader extends React.Component {
         });
     }
 
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else if (response.status == 502){
+            throw new Error('网络不好，请稍后尝试')            
+        }
+    }
+
+    checkMessage(result) {
+        if (result.message != undefined) {
+            throw new Error(result.message)
+        }
+        return result
+    }
+
     handleLogin(e){
         e.preventDefault();
         var formData = this.props.form.getFieldsValue();
-        fetch('/api/user/login?account=' + formData.account + '&password=' + formData.password)
-        .then(response => response.json())
-        .then(result => {
-            if (result.message != undefined) {
-                throw new Error(result.message)
-            }
-            return result
+        fetch('/api/user/login?account=' + formData.account + '&password=' + formData.password, {
+            credentials: 'same-origin'
         })
+        .then(this.checkStatus)
+        .then(response => response.json())
+        .then(this.checkMessage)
         .then(user => {
             this.setState({
                 userNickName: user.name,
@@ -150,6 +164,7 @@ class PCHeader extends React.Component {
     }
 
     componentWillMount(){
+        console.log('component will mount')
 		if (localStorage.userid != undefined && localStorage.userid != ''  ) {
 			this.setState({hasLogined:true});
 			this.setState(
@@ -161,13 +176,16 @@ class PCHeader extends React.Component {
 		}
     }
     
-
+    componentDidMount() {
+        console.log('component did mount')
+    }
 
 
 
     render(){
+        console.log('component render')
         let {getFieldProps} = this.props.form;
-
+    
         const menu = (
             <Menu >
               <Menu.Item>

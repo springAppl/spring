@@ -6,7 +6,7 @@ import md5 from "md5";
 import findIndex from "lodash/findIndex";
 import uniqBy from "lodash/uniqBy";
 import LzEditor from 'react-lz-editor'
-import {Button, Modal} from 'antd';
+import {Button, Modal, message} from 'antd';
 import PostForm from './post_form';
 
 export default class POST extends React.Component {
@@ -102,6 +102,18 @@ export default class POST extends React.Component {
       }));
       return policy;
     }
+
+    checkStatus(response) {
+      if (response.status >= 200 && response.status < 300) {
+        return response
+      } else {
+        var error = new Error(response.statusText)
+        error.response = response
+        throw error
+      }
+    }
+
+
     submit(){
       fetch('/api/article', {
         method: 'PUT',
@@ -111,7 +123,14 @@ export default class POST extends React.Component {
         }),
         headers: {
           'content-type': 'application/json'
-        }
+        },
+        credentials: 'same-origin'
+      }).then(this.checkStatus)
+      .then(response => {
+        message.success('发表成功')
+      })
+      .catch(error => {
+         message.error(error.message)
       });
     }
     handleOk() {
@@ -154,9 +173,3 @@ export default class POST extends React.Component {
       );
     }
   }
-
-
-
-
-
-
